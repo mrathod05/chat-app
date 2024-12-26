@@ -1,7 +1,7 @@
 export const ROUTE = {
   login: `/login`,
   signUp: `/sign-up`,
-  dashboard: `/dashboard1`,
+  dashboard: `/dashboard`,
   user: `/user`,
   products: `/products`,
 };

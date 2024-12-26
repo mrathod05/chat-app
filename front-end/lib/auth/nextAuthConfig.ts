@@ -1,18 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 
 import { ROUTE } from "../constants/route";
 import { ERROR_MESSAGES } from "../constants/errorMessages";
 import { Logger } from "../logger";
+import { ENV_CONSTANTS } from "../constants/env";
+
+const { NEXT_AUTH_SECRET, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } =
+  ENV_CONSTANTS;
 
 export const authOptions: NextAuthOptions = {
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: NEXT_AUTH_SECRET,
   pages: {
     signIn: ROUTE.login,
     error: ROUTE.login,
   },
   providers: [
+    GoogleProvider({
+      clientId: GOOGLE_CLIENT_ID,
+      clientSecret: GOOGLE_CLIENT_SECRET,
+    }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {},

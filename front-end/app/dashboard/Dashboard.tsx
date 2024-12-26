@@ -3,12 +3,11 @@
 import { JSX } from "react";
 import { useRouter } from "next/navigation";
 
-import useAuth from "@/firebase/hook/useFirebaseAuth";
 import { ROUTE } from "@/lib/constants/route";
+import { signOut } from "next-auth/react";
 
 const Dashboard = (): JSX.Element => {
   const router = useRouter();
-  const { signOut } = useAuth();
 
   const handleSignOut = async (): Promise<void> => {
     try {
