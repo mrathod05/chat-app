@@ -1,7 +1,8 @@
 import { ENV_CONSTANT } from './env';
 
 const { APP_NAME, GLOBAL_PREFIX } = ENV_CONSTANT;
-export const STATIC = {
+
+export const CONST = {
   EXPRESS: {
     MAX_JSON_LIMIT: '100mb',
   },
@@ -12,4 +13,8 @@ export const STATIC = {
     VERSION: '1.0',
     PREFIX: 'api-docs',
   },
+};
+
+export const ERROR_CODE = {
+  DUPLICATE: 11000,
 };

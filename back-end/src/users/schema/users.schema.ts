@@ -6,12 +6,12 @@ export type UserDocument = HydratedDocument<User>;
 @Schema({ collection: 'users', timestamps: true, versionKey: false })
 export class User {
   @Prop() user_name: string;
-  @Prop() phone_number: string;
+  @Prop({ unique: true, index: true }) phone_number: string;
   @Prop() isd_code: string;
   @Prop() profile_image: string;
-  @Prop() is_active: string;
-  @Prop() is_deleted: string;
-  @Prop() login_details: UserLoginDevice[];
+  @Prop({ default: false }) is_active: string;
+  @Prop({ default: false }) is_deleted: string;
+  @Prop() login_details: LoginDeviceDto[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

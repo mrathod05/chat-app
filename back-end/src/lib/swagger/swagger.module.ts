@@ -3,14 +3,15 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { INestApplication } from '@nestjs/common';
 import { ENV_CONSTANT } from '../constants/env';
 import { UsersModule } from 'src/users/users.module';
-import { STATIC } from '../constants/static';
+import { CONST } from '../constants';
+import { AuthModule } from 'src/auth/auth.module';
 
 const { APP_NAME } = ENV_CONSTANT;
-const { API_VERSIONS, DESCRIPTION, SERVERS, PREFIX } = STATIC.SWAGGER;
+const { API_VERSIONS, DESCRIPTION, SERVERS, PREFIX } = CONST.SWAGGER;
 
 @Module({})
 export class SwaggerSetupModule {
-  static setupSwagger(app: INestApplication) {
+  static setupSwagger(app: INestApplication): void {
     const config = new DocumentBuilder()
       .setTitle(APP_NAME)
       .setDescription(DESCRIPTION)
@@ -20,7 +21,7 @@ export class SwaggerSetupModule {
       .build();
 
     const document = SwaggerModule.createDocument(app, config, {
-      include: [UsersModule],
+      include: [AuthModule, UsersModule],
     });
 
     SwaggerModule.setup(PREFIX, app, document, {

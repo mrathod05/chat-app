@@ -2,14 +2,15 @@ import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { CORS_CONFIG } from './lib/config/cors';
-import { ExceptionHandler } from './lib/config/exception.handler';
+import { GlobalExceptionHandler } from './lib/config/exception.handler';
 import { ENV_CONSTANT } from './lib/constants/env';
 import { json } from 'express';
 import { SwaggerSetupModule } from './lib/swagger/swagger.module';
-import { STATIC } from './lib/constants/static';
+import { CONST } from './lib/constants';
+import { ERROR_MESSAGE } from './lib/constants/messages';
 
 const { APP_URL, PORT, GLOBAL_PREFIX } = ENV_CONSTANT;
-const { EXPRESS, SWAGGER } = STATIC;
+const { EXPRESS, SWAGGER } = CONST;
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
@@ -24,7 +25,7 @@ async function bootstrap(): Promise<void> {
     new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
   );
 
-  app.useGlobalFilters(new ExceptionHandler());
+  app.useGlobalFilters(new GlobalExceptionHandler());
 
   app.enableVersioning({
     type: VersioningType.URI,
@@ -40,4 +41,4 @@ async function bootstrap(): Promise<void> {
   );
 }
 
-bootstrap();
+bootstrap().catch(() => Logger.error(ERROR_MESSAGE.APPLICATION_NOT_START));

@@ -3,6 +3,7 @@ dotenv.config();
 
 export const ENV_CONSTANT = {
   //App
+  NODE_ENV: process.env.NODE_ENV,
   APP_NAME: process.env.APP_NAME,
   APP_URL: process.env.APP_URL,
   PORT: process.env.PORT,
